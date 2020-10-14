@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Students view</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    {% for student in allStudents %}
+    <form action="/del_student", method='POST'>
+        <p>{{ student.ra }} - {{ student.nome_do_aluno }} - {{ student.email_do_aluno }}</p>
+        <label>RA:</label>
+        <input type="text" name='ra' value='{{student.ra}}'/>
+        <label>Name:</label>
+        <input type="text" name='nome_do_aluno' value='{{student.nome_do_aluno}}'/>
+        <label>Email:</label>
+        <input type="text" name='email_do_aluno' value='{{student.email_do_aluno}}'/>
+        <button name='edit' type='submit'>Edit</button>
+        <button name='Delete' type='submit'>Delete</button>
+    </form>
+    {% endfor %}
+
+    {{ oneItem.nome_do_aluno }}
+
+</body>
+</html>
