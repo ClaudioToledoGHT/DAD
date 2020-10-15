@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Profile: {{ student.nome_do_aluno }}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+</head>
+<body>
+    
+
+    <form method="POST" action="/edit_student">
+        <label>RA:</label>
+        <label>{{ student.ra }}</label> </br>
+        <input id='ra' name='ra' type='hidden' value='{{ student.ra }}'/>
+        <label>Name:</label>
+        <input id='nome_do_aluno' name='nome_do_aluno' value='{{ student.nome_do_aluno }}'/>
+        <label>Email:</label>
+        <input id='email_do_aluno' name='email_do_aluno' value='{{ student.email_do_aluno }}'/>
+        <label>Cep:</label>
+        <input id='cep' name='cep' value='{{ student.cep }}'/>
+        <label>Logradouro:</label>
+        <input id='logradouro' name='logradouro' value='{{ student.logradouro }}'/> </br></br>
+        <label>Numero:</label>
+        <input id='numero' name='numero' value='{{ student.numero }}'/>
+        <label>Complemento:</label>
+        <input id='complemento' name='complemento' value='{{ student.complemento }}'/> </br>
+        <input type='submit' value='Salvar'/>
+    </form>
+
+
+</body>
+</html>
