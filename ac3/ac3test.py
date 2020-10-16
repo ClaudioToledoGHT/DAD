@@ -30,16 +30,16 @@ class gh_team(db.Model):
         return '<Aluno %r>' % self.nome_do_aluno
 
 
-@app.route('/')
+@app.route('/', methods=['DELETE', 'GET'])
 def index():
-    return render_template('add_student.html')
-
-
-@app.route('/student', methods=['DELETE', 'GET'])
-def all_students():
     allStudents = gh_team.query.all()
     # .all() to return everything that matchs this filter
     return render_template('students.html', allStudents=allStudents)
+
+
+@app.route('/student')
+def add_students():
+    return render_template('add_student.html')
 
 
 @app.route('/student/<ra>')
@@ -55,14 +55,14 @@ def post_student():
                       request.form['logradouro'], request.form['numero'], request.form['cep'], request.form['complemento'])
     db.session.add(student)
     db.session.commit()
-    return redirect(url_for('all_students'))
+    return redirect(url_for('index'))
 
 
 @app.route('/del_student', methods=['DELETE'])
 def del_student():
     gh_team.query.filter_by(ra=request.form['ra']).delete()
     db.session.commit()
-    return redirect(url_for('all_students'))
+    return redirect(url_for('index'))
 
 
 @app.route('/edit_student', methods=['PUT', 'GET'])
@@ -85,7 +85,7 @@ def edit_student():
     student.complemento = request.form['complemento']
     '''
     db.session.commit()
-    return redirect(url_for('all_students'))
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":

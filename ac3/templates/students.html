@@ -17,7 +17,7 @@
         <button id='edit' name='edit' type='button' onclick='editfunction("{{student.ra}}")'>Edit</button>
         <button id='delete' name='delete' type='button' onclick='deletefunction("{{student.ra}}")'>Delete</button> </br>
     {% endfor %}
-        <button id='back' type='button' onclick='backfunction()'>Back</button>
+        <button id='back' type='button' onclick='backfunction()'>Add Student</button>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -29,7 +29,7 @@
 
         function backfunction(){
             console.log('entry')
-            window.location.href = '/';
+            window.location.href = '/student';
         }
 
         function deletefunction(ra){
