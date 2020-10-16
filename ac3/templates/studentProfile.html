@@ -9,8 +9,8 @@
 </head>
 <body>
     
-
-    <form method="POST" action="/edit_student">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <form method="PUT" action="/edit_student">
         <label>RA:</label>
         <label>{{ student.ra }}</label> </br>
         <input id='ra' name='ra' type='hidden' value='{{ student.ra }}'/>
@@ -28,7 +28,18 @@
         <input id='complemento' name='complemento' value='{{ student.complemento }}'/> </br>
         <input type='submit' value='Salvar'/>
     </form>
-
+    <script type="text/javascript">
+        $("#cep").focusout(function(){
+            $.ajax({
+                url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
+                dataType: 'json',
+                success: function(resposta){
+                    $("#logradouro").val(resposta.logradouro);
+                    $("#numero").focus();
+                }
+            });
+        });
+        </script>
 
 </body>
 </html>

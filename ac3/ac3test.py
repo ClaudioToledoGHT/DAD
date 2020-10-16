@@ -35,7 +35,7 @@ def index():
     return render_template('add_student.html')
 
 
-@app.route('/student')
+@app.route('/student', methods=['DELETE', 'GET'])
 def all_students():
     allStudents = gh_team.query.all()
     # .all() to return everything that matchs this filter
@@ -44,8 +44,9 @@ def all_students():
 
 @app.route('/student/<ra>')
 def student(ra):
-    student = gh_team.query.filter_by(ra=ra).first()
-    return render_template('studentProfile.html', student=student)
+    global selectstudent
+    selectstudent = gh_team.query.filter_by(ra=ra).first()
+    return render_template('studentProfile.html', student=selectstudent)
 
 
 @app.route('/post_student', methods=['POST'])
@@ -57,21 +58,32 @@ def post_student():
     return redirect(url_for('all_students'))
 
 
-@app.route('/del_student', methods=['POST'])
+@app.route('/del_student', methods=['DELETE'])
 def del_student():
     gh_team.query.filter_by(ra=request.form['ra']).delete()
     db.session.commit()
     return redirect(url_for('all_students'))
 
 
-@app.route('/edit_student', methods=['POST'])
+@app.route('/edit_student', methods=['PUT', 'GET'])
 def edit_student():
+    student = gh_team.query.filter_by(ra=selectstudent.ra).first()
+    student.nome_do_aluno = request.args.get('nome_do_aluno')
+    student.email_do_aluno = request.args.get('email_do_aluno')
+    student.cep = request.args.get('cep')
+    student.numero = request.args.get('numero')
+    student.logradouro = request.args.get('logradouro')
+    student.complemento = request.args.get('complemento')
+    '''
+    POST
     student = gh_team.query.filter_by(ra=request.form['ra']).first()
     student.nome_do_aluno = request.form['nome_do_aluno']
     student.email_do_aluno = request.form['email_do_aluno']
     student.cep = request.form['cep']
     student.numero = request.form['numero']
     student.logradouro = request.form['logradouro']
+    student.complemento = request.form['complemento']
+    '''
     db.session.commit()
     return redirect(url_for('all_students'))
 
