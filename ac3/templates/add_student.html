@@ -1,42 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Cadastrar Aluno</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-</head>
-<body>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <form method="POST" action="/post_student">
+{% extends "base.html" %}
+{% block title %}Alunos{% endblock %}
+{% block path %} / Cadastro{% endblock %}
+{% block content %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<h1 class="mb">Cadastro</h1>
+
+<form method="POST" action="/post_student">
+    <div class="form-group">
         <label>RA:</label>
-        <input id='ra' name='ra' type='number'/> </br>
+      <input required id='ra' name='ra' type='number' class="form-control">
+    </div>
+
+    <div class="form-group">
         <label>Nome:</label>
-        <input id='nome_do_aluno' name='nome_do_aluno' type='text'/>
+      <input id='nome_do_aluno' name='nome_do_aluno' type='text' class="form-control">
+    </div>
+
+    <div class="form-group">
         <label>Email:</label>
-        <input id='email_do_aluno' name='email_do_aluno' type='email'/> </br>
-        <label>Cep:</label>
-        <input id="cep" name="cep" type='number'/> </br>
+      <input id='email_do_aluno' name='email_do_aluno' type='email' class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>CEP:</label>
+      <input id="cep" name="cep" type='number' class="form-control">
+    </div>
+
+    <div class="form-group">
         <label>Logradouro:</label>
-        <input id='logradouro' name='logradouro' type='text'/>
-        <label>Numero:</label>
-        <input id='numero' name='numero' type='text'/>
+      <input id='logradouro' name='logradouro' type='text' class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label>Número:</label>
+      <input id='numero' name='numero' type='text' class="form-control">
+    </div>
+
+    <div class="form-group">
         <label>Complemento:</label>
-        <input id='complemento' name='complemento' type='text'/> </br>
-        <input type="submit" />
-    </form>
-    
-    <script type="text/javascript">
-        $("#cep").focusout(function(){
-            $.ajax({
-                url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
-                dataType: 'json',
-                success: function(resposta){
-                    $("#logradouro").val(resposta.logradouro);
-                    $("#numero").focus();
-                }
-            });
+      <input  id='complemento' name='complemento' type='text' class="form-control">
+    </div>
+
+    <button type="submit"class="btn btn-outline-primary">Cadastrar</button>
+  </form>
+
+
+<script type="text/javascript">
+    $("#cep").focusout(function(){
+        $.ajax({
+            url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
+            dataType: 'json',
+            success: function(resposta){
+                $("#logradouro").val(resposta.logradouro);
+                $("#numero").focus();
+            }
         });
-    </script>
-</body>
-</html>
+    });
+</script>
+
+{% endblock %}

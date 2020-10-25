@@ -51,16 +51,19 @@ def student(ra):
 
 @app.route('/post_student', methods=['POST'])
 def post_student():
-    student = gh_team(request.form['ra'], request.form['nome_do_aluno'], request.form['email_do_aluno'],
-                      request.form['logradouro'], request.form['numero'], request.form['cep'], request.form['complemento'])
-    db.session.add(student)
-    db.session.commit()
-    return redirect(url_for('index'))
+    try:
+        student = gh_team(request.form['ra'], request.form['nome_do_aluno'], request.form['email_do_aluno'],
+                        request.form['logradouro'], request.form['numero'], request.form['cep'], request.form['complemento'])
+        db.session.add(student)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except:
+        print("error")
 
 
-@app.route('/del_student', methods=['DELETE'])
-def del_student():
-    gh_team.query.filter_by(ra=request.form['ra']).delete()
+@app.route('/del_student/<ra>', methods=['DELETE'])
+def del_student(ra):
+    gh_team.query.filter_by(ra=ra).delete()
     db.session.commit()
     return redirect(url_for('index'))
 
@@ -75,7 +78,6 @@ def edit_student():
     student.logradouro = request.args.get('logradouro')
     student.complemento = request.args.get('complemento')
     '''
-    POST
     student = gh_team.query.filter_by(ra=request.form['ra']).first()
     student.nome_do_aluno = request.form['nome_do_aluno']
     student.email_do_aluno = request.form['email_do_aluno']
@@ -89,4 +91,4 @@ def edit_student():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

@@ -1,52 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Students view</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-</head>
-<body>
-    {% for student in allStudents %}
-        <label>RA:</label>
-        <label id='ra' name='ra'>{{student.ra}}</label>
-        <label>Name:</label>
-        <label id='nome_do_aluno' name='nome_do_aluno'>{{student.nome_do_aluno}}</label>
-        <label>Email:</label>
-        <label id='email_do_aluno' name='email_do_aluno'>{{student.email_do_aluno}}</label>
-        <button id='edit' name='edit' type='button' onclick='editfunction("{{student.ra}}")'>Edit</button>
-        <button id='delete' name='delete' type='button' onclick='deletefunction("{{student.ra}}")'>Delete</button> </br>
-    {% endfor %}
-        <button id='back' type='button' onclick='backfunction()'>Add Student</button>
+{% extends "base.html" %}
+{% block title %}Alunos{% endblock %}
+{% block content %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<div class="flex">
+    <h1>Alunos</h1>
+    <button id='back' type="button" onclick='backfunction()' class="btn btn-outline-primary">Adicionar</button>
+</div>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">RA</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Email</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for student in allStudents %}
+        <tr>
+            <td>{{student.ra}}</td>
+            <td>{{student.nome_do_aluno}}</td>
+            <td>{{student.email_do_aluno}}</td>
+            
+            <td>
+                <i class="fa fa-edit icon" onclick='editfunction("{{student.ra}}")'></i>
+                <i class="fa fa-remove icon" onclick='deletefunction("{{student.ra}}")'></i>
+            </td>
+        </tr>
+        
+{% endfor %}
 
-    
-    <script type=text/javascript>
-        function editfunction(ra) {
-            window.location.href = '/student/'+ra;
-        }
-
-        function backfunction(){
-            console.log('entry')
-            window.location.href = '/student';
-        }
-
-        function deletefunction(ra){
-            $.ajax({
-                url: '/del_student',
-                method: 'DELETE',
-                data: {
-                    ra:ra
-                },
-                success: function(data) {
-                    console.log('DELETED')
-                    location.reload()
-                } 
-            })
-        }
-    </script>
+    </tbody>
+  </table>
 
 
-</body>
-</html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<script type=text/javascript>
+function editfunction(ra) {
+    window.location.href = '/student/'+ra;
+}
+
+function backfunction(){
+    console.log('entry')
+    window.location.href = '/student';
+}
+
+function deletefunction(ra){
+    $.ajax({
+        url: `/del_student/${ra}`,
+        method: 'DELETE',
+        // data: {
+        //     ra:ra
+        // },
+        success: function(data) {
+            console.log('DELETED')
+            location.reload()
+        } 
+    })
+}
+</script>
+
+{% endblock %}
